@@ -4,10 +4,9 @@
 
 //using cli-table for table format
 
-const { default: axios } = require('axios');
 const readline = require('readline');
 const table = require('cli-table');
-const { profile } = require('console');
+const {APICall} = require('./utils.js')
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -16,12 +15,14 @@ const rl = readline.createInterface({
 
 rl.question('What is you GitHub Handle? ', async function (answer) {
 
-    try {
-        var porfileInfo = await axios.get(`https://api.github.com/users/${answer}`)
-    } catch (error) {
-        console.log('Something went wrong')
-    }
+    // try {
+    //     var porfileInfo = await axios.get(`https://api.github.com/users/${answer}`)
+    // } catch (error) {
+    //     console.log('Something went wrong')
+    // }
   
+    var porfileInfo = await APICall(`https://api.github.com/users/${answer}`)
+    
    //destructuring
     const { name, company, location, followers, following } = porfileInfo.data;
     
@@ -44,12 +45,14 @@ rl.question('What is you GitHub Handle? ', async function (answer) {
 
 
       //for organizations
-     try {
-        var orgInfo = await axios.get(`https://api.github.com/users/${answer}/orgs`)
-    } catch (error) {
-        console.log('Something went wrong')      
-     }
+    //  try {
+    //     var orgInfo = await axios.get(`https://api.github.com/users/${answer}/orgs`)
+    // } catch (error) {
+    //     console.log('Something went wrong')      
+    //  }
     
+    var orgInfo = await APICall(`https://api.github.com/users/${answer}/orgs`)
+
     orgInfo.data.forEach(org => {
 
         // console.log(org.login)
