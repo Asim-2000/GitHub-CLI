@@ -15,8 +15,15 @@ const rl = readline.createInterface({
 })
 
 rl.question('What is you GitHub Handle? ', async function (answer) {
+
+    try {
+        var porfileInfo = await axios.get(`https://api.github.com/users/${answer}`)
+    } catch (error) {
+        console.log('Something went wrong')
+
+        
+    }
     
-    const porfileInfo = await axios.get(`https://api.github.com/users/${answer}`)
     
 
    //destructuring
@@ -29,11 +36,11 @@ rl.question('What is you GitHub Handle? ', async function (answer) {
     
     
     porfileTable.push(
-        { Name: name },
-        { Company: company },
-        { Location: location },
-        { Followers: followers },
-        {Following:following}
+        { Name: name || "" },
+        { Company: company ||"" },
+        { Location: location || "" },
+        { Followers: followers || "" },
+        {Following:following || ""}
     )
 
 
