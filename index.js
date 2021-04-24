@@ -20,12 +20,8 @@ rl.question('What is you GitHub Handle? ', async function (answer) {
         var porfileInfo = await axios.get(`https://api.github.com/users/${answer}`)
     } catch (error) {
         console.log('Something went wrong')
-
-        
     }
-    
-    
-
+  
    //destructuring
     const { name, company, location, followers, following } = porfileInfo.data;
     
@@ -33,6 +29,9 @@ rl.question('What is you GitHub Handle? ', async function (answer) {
 
 
     const porfileTable = new table();
+    const orgTable = new table({
+        head: ['Organization', 'Description']
+    })
     
     
     porfileTable.push(
@@ -44,8 +43,23 @@ rl.question('What is you GitHub Handle? ', async function (answer) {
     )
 
 
-    console.log(porfileTable.toString())
+      //for organizations
+     try {
+        var orgInfo = await axios.get(`https://api.github.com/users/${answer}/orgs`)
+    } catch (error) {
+        console.log('Something went wrong')      
+     }
+    
+    orgInfo.data.forEach(org => {
+
+        // console.log(org.login)
+        orgTable.push([org.login,org.description.slice(0,50)+"..."])
+        
+    });
+
+    console.log(porfileTable.toString());
     //close the stream so that it doesn't keep executing
+    console.log(orgTable.toString());
 
 
     rl.close();
