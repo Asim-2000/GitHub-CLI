@@ -31,6 +31,12 @@ Now, you can run the application using the following
 npm link
 ```
 
+To Uninstall this package globally, simply use the following command:
+
+```sh
+npm uninstall -g show-github
+```
+
 ## NPM Packages Used
 1. 'axios' => To fetch data and do operations on it
 2. 'cli-table' => To present data in beautiful format
